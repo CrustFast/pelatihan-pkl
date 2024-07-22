@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pelayanan Pelatihan</title>
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            margin-bottom: 0;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+        }
+        .sidebar {
+            height: 100vh;
+            background: #343a40;
+            color: white;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background: #495057;
+            text-decoration: none;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .widget {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .widget h3 {
+            font-size: 1.5rem;
+        }
+        .dashboard-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .widget {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="index.html">
+        <i class="fas fa-home"></i>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="tatap-muka.html">Pelatihan Tatap Muka</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="daring.html">Pelatihan Daring</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="hybrid.html">Pelatihan Hybrid</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pkl.html">Pelatihan PKL</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="fasilitas.html">Pelatihan Penggunaan Fasilitas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="study-tour.html">Pelatihan Study Tour</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="kelompok-rentan.html">Pelatihan Kelompok Rentan</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="main-content">
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+    </div>
+
+    <div class="content">
+        <h1>Selamat Datang di Dashboard Pelayanan Pelatihan</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="widget">
+                    <h3>Total Pelatihan</h3>
+                    <p>25</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget">
+                    <h3>Total Peserta</h3>
+                    <p>150</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget">
+                    <h3>Pelatihan Mendatang</h3>
+                    <p>5</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h3>Grafik Pendaftaran Pelatihan</h3>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Bootstrap dan jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Chart.js untuk grafik -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Pendaftaran Pelatihan',
+                data: [12, 19, 3, 5, 2, 3, 9, 10, 8, 6, 7, 11],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
