@@ -130,10 +130,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="widget">
-                    <h3>Grafik Pendaftaran Pelatihan</h3>
-                    <canvas id="myChart"></canvas>
+                    <h3>Combo Bar/Line Chart</h3>
+                    <canvas id="comboChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="widget">
+                    <h3>Polar Area Chart</h3>
+                    <canvas id="polarChart"></canvas>
                 </div>
             </div>
         </div>
@@ -147,22 +153,79 @@
 <!-- Chart.js untuk grafik -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    const labels = ['Jawa Barat', 'Lampung', 'Banten', 'Jawa Tengah', 'Bengkulu', 'Kalimantan Timur', 'DKI Jakarta', 'DI Yogyakarta', 'Kalimantan Utara', 'Papua Barat'];
+    const dataValues = [9821, 1462, 881, 664, 491, 438, 299, 216, 183, 145];
+
+    // Combo Bar/Line Chart
+    const ctxCombo = document.getElementById('comboChart').getContext('2d');
+    const comboChart = new Chart(ctxCombo, {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Bar Dataset',
+                    data: dataValues,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Line Dataset',
+                    data: dataValues,
+                    type: 'line',
+                    fill: false,
+                    borderColor: 'rgba(255, 99, 132, 1)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Polar Area Chart
+    const ctxPolar = document.getElementById('polarChart').getContext('2d');
+    const polarChart = new Chart(ctxPolar, {
+        type: 'polarArea',
+        data: {
+            labels: labels,
             datasets: [{
-                label: 'Pendaftaran Pelatihan',
-                data: [12, 19, 3, 5, 2, 3, 9, 10, 8, 6, 7, 11],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                data: dataValues,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    'rgba(140, 85, 100, 0.2)',
+                    'rgba(100, 200, 255, 0.2)',
+                    'rgba(255, 150, 180, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(140, 85, 100, 1)',
+                    'rgba(100, 200, 255, 1)',
+                    'rgba(255, 150, 180, 1)'
+                ],
                 borderWidth: 1
             }]
         },
         options: {
             scales: {
-                y: {
+                r: {
                     beginAtZero: true
                 }
             }
