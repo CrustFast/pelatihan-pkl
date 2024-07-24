@@ -19,6 +19,9 @@
         }
         .navbar {
             margin-bottom: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .main-content {
             display: flex;
@@ -46,30 +49,43 @@
             padding: 20px;
             flex-grow: 1;
             overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
         .widget {
             background: #f8f9fa;
             padding: 20px;
-            margin-bottom: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .widget h3 {
             font-size: 1.5rem;
+            margin-bottom: 10px;
         }
-        .dashboard-image {
+        .number-animation {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .progress {
+            width: 100%;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        .header-image {
             width: 100%;
             height: auto;
-            display: block;
-            margin-bottom: 20px;
-        }
-        .widget {
-            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="index.html">
         <i class="fas fa-home"></i>
     </a>
@@ -108,40 +124,40 @@
     </div>
 
     <div class="content">
-        <h1>Selamat Datang di Dashboard Pelayanan Pelatihan</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="widget">
-                    <h3>Total Pelatihan</h3>
-                    <p>25</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="widget">
-                    <h3>Total Peserta</h3>
-                    <p>150</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="widget">
-                    <h3>Pelatihan Mendatang</h3>
-                    <p>5</p>
-                </div>
+        <img src="https://bbppmpvbmti.kemdikbud.go.id/main/wp-content/uploads/2024/07/7-4.jpg" alt="Header Image" class="header-image">
+        <div class="widget">
+            <h3>Total Pelatihan</h3>
+            <p>25</p>
+        </div>
+        <div class="widget">
+            <h3>Total Peserta</h3>
+            <p>150</p>
+        </div>
+        <div class="widget">
+            <h3>Pelatihan Mendatang</h3>
+            <p>5</p>
+        </div>
+        <div class="widget">
+            <h3>Visitor Counter</h3>
+            <p class="number-animation" id="visitorCounter">0</p>
+        </div>
+        <div class="widget">
+            <h3>Real-time Analytics</h3>
+            <p class="number-animation" id="realTimeAnalytics">0</p>
+        </div>
+        <div class="widget">
+            <h3>Progress Bar</h3>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="widget">
-                    <h3>Combo Bar/Line Chart</h3>
-                    <canvas id="comboChart"></canvas>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="widget">
-                    <h3>Polar Area Chart</h3>
-                    <canvas id="polarChart"></canvas>
-                </div>
-            </div>
+        <div class="widget">
+            <h3>Radar Chart Stacked</h3>
+            <canvas id="radarChart"></canvas>
+        </div>
+        <div class="widget">
+            <h3>Combo Bar/Line Chart</h3>
+            <canvas id="comboChart"></canvas>
         </div>
     </div>
 </div>
@@ -188,38 +204,17 @@
         }
     });
 
-    // Polar Area Chart
-    const ctxPolar = document.getElementById('polarChart').getContext('2d');
-    const polarChart = new Chart(ctxPolar, {
-        type: 'polarArea',
+    // Radar Chart Stacked
+    const ctxRadar = document.getElementById('radarChart').getContext('2d');
+    const radarChart = new Chart(ctxRadar, {
+        type: 'radar',
         data: {
             labels: labels,
             datasets: [{
+                label: 'Data',
                 data: dataValues,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(140, 85, 100, 0.2)',
-                    'rgba(100, 200, 255, 0.2)',
-                    'rgba(255, 150, 180, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(201, 203, 207, 1)',
-                    'rgba(140, 85, 100, 1)',
-                    'rgba(100, 200, 255, 1)',
-                    'rgba(255, 150, 180, 1)'
-                ],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
@@ -231,6 +226,20 @@
             }
         }
     });
+
+    // Visitor Counter
+    let visitorCount = 0;
+    setInterval(() => {
+        visitorCount++;
+        document.getElementById('visitorCounter').textContent = visitorCount;
+    }, 1000);
+
+    // Real-time Analytics
+    let realTimeAnalytics = 0;
+    setInterval(() => {
+        realTimeAnalytics = Math.floor(Math.random() * 100);
+        document.getElementById('realTimeAnalytics').textContent = realTimeAnalytics;
+    }, 2000);
 </script>
 </body>
 </html>
