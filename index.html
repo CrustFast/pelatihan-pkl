@@ -30,6 +30,8 @@
             color: white;
             padding: 20px;
             position: fixed;
+            width: 220px;
+            overflow-y: auto;
         }
         .sidebar a {
             color: white;
@@ -62,14 +64,6 @@
             height: auto;
             display: block;
             margin-bottom: 20px;
-        }
-        .widget {
-            margin-bottom: 20px;
-        }
-        .weather-widget iframe,
-        .calendar-widget iframe {
-            width: 100%;
-            border: none;
         }
     </style>
 </head>
@@ -110,59 +104,57 @@
 <div class="main-content">
     <div class="sidebar">
         <h2>Dashboard</h2>
-        <div class="widget weather-widget">
+        <div class="widget">
             <h3>Cuaca Saat Ini</h3>
-            <iframe src="https://widget-weather.com/forecast-widget/?q=Jakarta&units=metric" frameborder="0" scrolling="no"></iframe>
+            <p id="weather-widget">Loading...</p>
         </div>
-        <div class="widget calendar-widget">
+        <div class="widget">
             <h3>Kalender</h3>
-            <iframe src="https://calendar.google.com/calendar/embed?src=en.indonesian%23holiday%40group.v.calendar.google.com&ctz=Asia%2FJakarta" style="border: 0" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://www.calendarlabs.com/ical-calendar/ics/33/Indonesia_Holidays.ics" style="border: 0" width="100%" height="250px" frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
 
     <div class="content">
         <h1>Selamat Datang di Dashboard Pelayanan Pelatihan</h1>
         <div class="row">
-            <div class="col-md-4">
-                <div class="widget visitor-counter-widget">
+            <div class="col-md-3">
+                <div class="widget">
                     <h3>Jumlah Pengunjung</h3>
-                    <p id="visitor-count">12345</p>
+                    <p id="visitor-count">22075</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="widget real-time-analytics-widget">
+            <div class="col-md-3">
+                <div class="widget">
                     <h3>Pengunjung Saat Ini</h3>
-                    <p id="real-time-visitors">10</p>
+                    <p id="real-time-visitors">86</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="widget number-animation-widget">
-                    <h3>Statistik Angka</h3>
-                    <p id="animated-number" style="font-size: 2em;">0</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="widget">
                     <h3>Total Pelatihan</h3>
                     <p>25</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="widget">
                     <h3>Total Peserta</h3>
                     <p>150</p>
                 </div>
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <div class="widget">
                     <h3>Pelatihan Mendatang</h3>
                     <p>5</p>
                 </div>
             </div>
-        </div>
-        <div class="row">
+            <div class="col-md-3">
+                <div class="widget">
+                    <h3>Statistik Angka</h3>
+                    <p id="animated-number">10000</p>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="widget">
                     <h3>Combo Bar/Line Chart</h3>
@@ -238,59 +230,34 @@
                     'rgba(255, 159, 64, 0.2)',
                     'rgba(201, 203, 207, 0.2)',
                     'rgba(140, 85, 100, 0.2)',
-                    'rgba(100, 200, 255, 0.2)',
-                    'rgba(255, 150, 180, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(201, 203, 207, 1)',
-                    'rgba(140, 85, 100, 1)',
-                    'rgba(100, 200, 255, 1)',
-                    'rgba(255, 150, 180, 1)'
-                ],
-                borderWidth: 1
+                    'rgba(220, 20, 60, 0.2)',
+                    'rgba(255, 69, 0, 0.2)'
+                ]
             }]
-        },
-        options: {
-            scales: {
-                r: {
-                    beginAtZero: true
-                }
-            }
         }
     });
 
-    // Visitor Counter
-    document.getElementById('visitor-count').innerText = Math.floor(Math.random() * 100000);
+    // Weather Widget Example
+    document.getElementById('weather-widget').innerHTML = '<p>Currently not available</p>';
 
-    // Real-time Analytics
-    setInterval(() => {
-        document.getElementById('real-time-visitors').innerText = Math.floor(Math.random() * 100);
-    }, 5000);
-
-    // Number Animation
-    function animateNumber(finalNumber, duration = 2000) {
-        let startNumber = 0;
-        const increment = finalNumber / (duration / 10);
-        const element = document.getElementById('animated-number');
-        
-        function updateNumber() {
-            startNumber += increment;
-            element.innerText = Math.floor(startNumber);
-            if (startNumber < finalNumber) {
-                setTimeout(updateNumber, 10);
+    // Animated Number Example
+    document.addEventListener('DOMContentLoaded', function () {
+        const animatedNumber = document.getElementById('animated-number');
+        let startValue = 0;
+        const endValue = parseInt(animatedNumber.innerText, 10);
+        const duration = 2000;
+        const increment = endValue / (duration / 50);
+        const updateNumber = () => {
+            startValue += increment;
+            if (startValue >= endValue) {
+                animatedNumber.innerText = endValue;
+            } else {
+                animatedNumber.innerText = Math.floor(startValue);
+                requestAnimationFrame(updateNumber);
             }
-        }
-        
+        };
         updateNumber();
-    }
-
-    animateNumber(10000);
+    });
 </script>
 </body>
 </html>
